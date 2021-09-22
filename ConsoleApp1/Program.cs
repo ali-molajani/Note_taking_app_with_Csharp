@@ -4,38 +4,49 @@ using System.Globalization;
 
 List<data> notes = interfaces.readFile();
 int currentId;
+var todo = "";
 if (notes == null)
 {
     currentId = 0;
     notes = new List<data>();
+    var rule = new Rule("[indianred]Saved Notes[/]");
+    rule.Alignment = Justify.Left;
+    AnsiConsole.Render(rule);
+
+    Console.WriteLine($"Saved notes:{currentId}");
+
+    var rule1 = new Rule("[indianred]Current Task[/]");
+    rule1.Alignment = Justify.Left;
+    AnsiConsole.Render(rule1);
+    Console.WriteLine("There is no notes here Let's write some !");
+    todo = "w";
 }
 else
 {
     currentId = notes.Count;
+    var rule = new Rule("[indianred]Saved Notes[/]");
+    rule.Alignment = Justify.Left;
+    AnsiConsole.Render(rule);
+
+    Console.WriteLine($"Saved notes:{currentId}");
+
+    var rule1 = new Rule("[indianred]Current Task[/]");
+    rule1.Alignment = Justify.Left;
+    AnsiConsole.Render(rule1);
+
+    todo = AnsiConsole.Prompt(
+        new TextPrompt<string>("What are you going [gray]todo[/]: [olive]Read[/] the previous Notes or [mediumvioletred]write[/] a new one?")
+            .InvalidChoiceMessage("[red]That's not a valid option[/]")
+            .DefaultValue("r")
+            .AddChoice("r")
+            .AddChoice("i")
+            .AddChoice("u")
+            .AddChoice("d")
+            .AddChoice("w"));
 }
 
 int nextId = currentId + 1;
 data newNote = new data();
-
-var rule = new Rule("[indianred]Saved Notes[/]");
-rule.Alignment = Justify.Left;
-AnsiConsole.Render(rule);
-
-Console.WriteLine($"Saved notes:{currentId}");
-
-var rule1 = new Rule("[indianred]Current Task[/]");
-rule1.Alignment = Justify.Left;
-AnsiConsole.Render(rule1);
-
-var todo = AnsiConsole.Prompt(
-    new TextPrompt<string>("What are you going [gray]todo[/]: [olive]Read[/] the previous Notes or [mediumvioletred]write[/] a new one?")
-        .InvalidChoiceMessage("[red]That's not a valid option[/]")
-        .DefaultValue("r")
-        .AddChoice("r")
-        .AddChoice("i")
-        .AddChoice("u")
-        .AddChoice("d")
-        .AddChoice("w"));
 
 switch (todo)
 {
