@@ -70,6 +70,10 @@ class interfaces
         List<data> notes = interfaces.readFile();
         data note = notes.Find(x => x.Id == id);
         notes.Remove(note);
+        if (notes.Exists(x => x.Id > id))
+        {
+            notes.FindAll(x => x.Id > id).ForEach(x => x.Id = x.Id - 1);
+        }
         var json = JsonConvert.SerializeObject(notes, Formatting.Indented);
         File.WriteAllText(@"Notes.txt", json);
         Console.WriteLine("Your selected note removed");
