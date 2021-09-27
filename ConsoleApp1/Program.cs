@@ -1,5 +1,7 @@
 ﻿using ConsoleApp1;
 using Spectre.Console;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 int currentId;
